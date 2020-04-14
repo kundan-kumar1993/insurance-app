@@ -19,6 +19,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 
+import BELRON_SOLUTIONS_RGB from '../../images/BELRON_SOLUTIONS_RGB.png'
 const lightColor = "rgba(255, 255, 255, 0.7)";
 
 const styles = (theme) => ({
@@ -41,6 +42,10 @@ const styles = (theme) => ({
   button: {
     borderColor: lightColor,
   },
+  img: {
+    height: 80,
+    marginTop: 10
+  }
 });
 
 function Header(props) {
@@ -63,11 +68,15 @@ function Header(props) {
                 </IconButton>
               </Grid>
             </Hidden>
-            <Grid item xs />
+            <Grid item xs>
+            <img className={classes.img} src={BELRON_SOLUTIONS_RGB} alt='Belron Solutions' />
+            </Grid>
             <Grid item>
-              <Link className={classes.link} href="#" variant="body2">
-                Go to docs
-              </Link>
+            <Tooltip title="Help">
+                <IconButton color="inherit">
+                  <HelpIcon />
+                </IconButton>
+              </Tooltip>
             </Grid>
             <Grid item>
               <Tooltip title="Alerts • No alerts">
@@ -91,45 +100,13 @@ function Header(props) {
         position="static"
         elevation={0}
       >
-        <Toolbar>
-          <Grid container alignItems="center" spacing={1}>
-            <Grid item xs>
-              <Typography color="inherit" variant="h5" component="h1">
-                Authentication
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Button
-                className={classes.button}
-                variant="outlined"
-                color="inherit"
-                size="small"
-              >
-                Web setup
-              </Button>
-            </Grid>
-            <Grid item>
-              <Tooltip title="Help">
-                <IconButton color="inherit">
-                  <HelpIcon />
-                </IconButton>
-              </Tooltip>
-            </Grid>
-          </Grid>
-        </Toolbar>
-      </AppBar>
-      <AppBar
-        component="div"
-        className={classes.secondaryBar}
-        color="primary"
-        position="static"
-        elevation={0}
-      >
         <Tabs value={0} textColor="inherit">
-          <Tab textColor="inherit" label="Users" />
-          <Tab textColor="inherit" label="Sign-in method" />
-          <Tab textColor="inherit" label="Templates" />
-          <Tab textColor="inherit" label="Usage" />
+          <Tab textColor="inherit" label="All" />
+          <Tab textColor="inherit" label="For approval" />
+          <Tab textColor="inherit" label="Not approved" />
+          <Tab textColor="inherit" label="Approved for repair" />
+          <Tab textColor="inherit" label="Approved invoice basis" />
+          <Tab textColor="inherit" label="Invoiced" />
         </Tabs>
       </AppBar>
     </React.Fragment>
