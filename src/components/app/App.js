@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
 import '../app/App.css';
-import Home from '../dashboard/home'
+import Application from "../account/application";
+import UserProvider from "../../providers/UserProvider";
 
-function App() {
-  return (
-    <div className="App">
-      <Home />
-    </div>
-  );
+class App extends Component {
+  render() {
+    return (
+      <UserProvider>
+        <Application />
+      </UserProvider>
+    )
+  }
 }
 
 export default App;

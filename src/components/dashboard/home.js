@@ -4,24 +4,26 @@ import {
   createMuiTheme,
   ThemeProvider,
   withStyles,
+  AppBar,
+  Toolbar,
+  Grid,
+  TextField,
+  Button,
+  Tooltip,
+  IconButton
 } from "@material-ui/core";
-import { CssBaseline, Hidden, Typography, Link } from "@material-ui/core";
+import { CssBaseline, Hidden } from "@material-ui/core";
 import Navigator from "../menu/navigator";
 import Content from "../dashboard/content";
 import Header from "../header/header";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import Copyright from "../footer/footer";
+import SearchIcon from '@material-ui/icons/Search';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 let theme = createMuiTheme({
   palette: {
@@ -160,6 +162,11 @@ const styles = {
     padding: theme.spacing(2),
     background: "#eaeff1",
   },
+  searchBar: {
+    borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
+    margin: "-30px 0px 15px 0px",
+    borderRadius: '10px',
+  },
 };
 
 function Home(props) {
@@ -170,34 +177,89 @@ function Home(props) {
     setMobileOpen(!mobileOpen);
   };
 
-  return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <nav className={classes.drawer}>
-          <Hidden smUp implementation="js">
-            <Navigator
-              PaperProps={{ style: { width: drawerWidth } }}
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-            />
-          </Hidden>
-          <Hidden xsDown implementation="css">
-            <Navigator PaperProps={{ style: { width: drawerWidth } }} />
-          </Hidden>
-        </nav>
-        <div className={classes.app}>
-          <Header onDrawerToggle={handleDrawerToggle} />
-          <main className={classes.main}>
-            <Content />
-          </main>
-          <footer className={classes.footer}>
-            <Copyright />
-          </footer>
+    return (
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <Router>
+            <nav className={classes.drawer}>
+              <Hidden smUp implementation="js">
+                <Navigator
+                  PaperProps={{ style: { width: drawerWidth } }}
+                  variant="temporary"
+                  open={mobileOpen}
+                  onClose={handleDrawerToggle}
+                />
+              </Hidden>
+              <Hidden xsDown implementation="css">
+                <Navigator PaperProps={{ style: { width: drawerWidth } }} />
+              </Hidden>
+            </nav>
+            <div className={classes.app}>
+            <Header onDrawerToggle={handleDrawerToggle} />
+            <main className={classes.main}>
+              <AppBar className={classes.searchBar} position="static" color="default" elevation={0}>
+                <Toolbar>
+                  <Grid container spacing={2} alignItems="center">
+                    <Grid item>
+                      <SearchIcon className={classes.block} color="inherit" />
+                    </Grid>
+                    <Grid item xs>
+                      <TextField
+                        fullWidth
+                        placeholder="Reg.nr, navn, saksnummer..."
+                        InputProps={{
+                          disableUnderline: true,
+                          className: classes.searchInput,
+                        }}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Button variant="contained" color="primary" className={classes.addUser}>
+                        Add user
+                      </Button>
+                      <Tooltip title="Reload">
+                        <IconButton>
+                          <RefreshIcon className={classes.block} color="inherit" />
+                        </IconButton>
+                      </Tooltip>
+                    </Grid>
+                  </Grid>
+                </Toolbar>
+              </AppBar>
+              <Switch>
+                <Route path="/active-missions">
+                  <Content />
+                </Route>
+                <Route path="/archieves">
+                  <Archieves />
+                </Route>
+                <Route path="/summary">
+                  <Summary />
+                </Route>
+              </Switch>
+              
+            </main>
+            <footer className={classes.footer}>
+              <Copyright />
+            </footer>
+          </div>
+          </Router>
         </div>
-      </div>
-    </ThemeProvider>
+      </ThemeProvider>
+    );
+
+}
+
+function Archieves() {
+  return (
+    <div>Archieves content!!</div>
+  );
+}
+
+function Summary() {
+  return (
+    <div>Summary content!!</div>
   );
 }
 
